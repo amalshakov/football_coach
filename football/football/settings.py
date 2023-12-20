@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'teams.apps.TeamsConfig',
 ]
 
 MIDDLEWARE = [
@@ -87,3 +88,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
 EMAIL_MAX_LENGTH = 254
+MAX_AGE_PLAYER = 40
+MIN_AGE_PLAYER = 16
+MAX_POWER_PLAYER = 50
+MIN_POWER_PLAYER = 10
