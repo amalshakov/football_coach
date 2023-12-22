@@ -5,6 +5,6 @@ from . import views
 app_name = 'games'
 
 urlpatterns = [
-    path('', views.match, name='match'),
+    path('', views.match, name='match_list'),
     path('<int:match_id>/', views.match_detail, name='match_detail'),
 ]

@@ -1,0 +1,75 @@
+{% load static %} 
+<nav class="navbar navbar-light" style="background-color: lightskyblue">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'teams:index' %}">
+    <img src="{% static 'img/logo.png' %}" width="30" height="30"
+    class="d-inline-block align-top" alt="">
+    <span style="color:red">Football</span>Coach
+    </a>
+      <ul class="nav nav-pills">
+        {% with request.resolver_match.view_name as view_name %}
+        {% comment %} <li class="nav-item"> 
+          <a class="nav-link {% if view_name  == 'about:author' %}
+          active{% endif %}" href="{% url 'about:author' %}">Об авторе</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'about:tech' %}
+          active{% endif %}" href="{% url 'about:tech' %}">Технологии
+          </a>
+        </li> {% endcomment %}
+        {% if request.user.is_authenticated %}
+        <li class="nav-item"> 
+          <a class="nav-link {% if view_name  == 'teams:teams_list' %}
+          active{% endif %}" href="{% url 'teams:teams_list' %}">
+            Команды
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link {% if view_name  == 'teams:my_team' %}
+          active{% endif %}" href="{% url 'teams:my_team' %}">
+            Моя команда
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link {% if view_name  == 'teams:players_list' %}
+          active{% endif %}" href="{% url 'teams:players_list' %}">
+            Игроки
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link {% if view_name  == 'games:match_list' %}
+          active{% endif %}" href="{% url 'games:match_list' %}">
+            Игры
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link link-light
+            {% if view_name  == 'users:password_change_form' %}
+            active{% endif %}" href="{% url 'users:password_change_form' %}">
+            Изменить пароль
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link link-light" href="{% url 'users:logout' %}">
+            Выйти
+          </a>
+        </li>
+        <li>
+          Пользователь: {{ user.username }}
+        </li>
+        {% else %}
+        <li class="nav-item"> 
+          <a class="nav-link link-light {% if view_name  == 'users:login' %}
+            active{% endif %}" href="{% url 'users:login' %}">Войти
+          </a>
+        </li>
+        <li class="nav-item"> 
+          <a class="nav-link link-light {% if view_name  == 'users:signup' %}
+          active{% endif %}" href="{% url 'users:signup' %}">Регистрация
+          </a>
+        </li>
+        {% endif %}
+        {% endwith %}
+      </ul>
+  </div>
+</nav>

@@ -1,3 +1,11 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def match(request):
+    """Выводит список всех игр между командами."""
+    pass
+
+
+def match_detail(request):
+    """Выводит информацию о выбранной игре."""
+    pass

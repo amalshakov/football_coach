@@ -3,6 +3,8 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth import get_user_model
 
+from teams.models import Player
+
 User = get_user_model()
 
 
