@@ -1,0 +1,48 @@
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid black;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+
+{% extends 'base.html' %}
+{% load thumbnail %}
+  
+  {% block title %}
+    Команды
+  {% endblock %}
+  
+  {% block content %}
+    <div class="container py-5">
+      <table>
+        <tr>
+          <th>Эмблема</th>
+          <th>Название</th>
+          <th>Город</th>
+          <th>Тренер</th>
+          <th>Стадион</th>
+          <th>Вместимость</th>
+        </tr>
+        {% for team in teams %}
+        <tr>
+          <td>{% thumbnail team.emblem "30x30" crop="center" quality=100 upscale=True as im %}
+            <img src="{{ im.url }}">
+          {% endthumbnail %}</td>
+          <td>{{ team.name }}</td>
+          <td>{{ team.city }}</td>
+          <td>{{ team.coach }}</td>
+          <td>{{ team.stadium }}</td>
+          <td>{{ team.capacity }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  {% endblock %}
+  

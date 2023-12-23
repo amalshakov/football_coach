@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from .models import Player, Team
+
 
 def index(request):
     """Главная страница."""
@@ -8,7 +10,11 @@ def index(request):
 
 def teams(request):
     """Выводит список всех команд."""
-    pass
+    teams = Team.objects.all()
+    context = {
+        'teams': teams,
+    }
+    return render(request, 'teams/teams_list.html', context)
 
 
 def team_detail(request):
@@ -23,7 +29,11 @@ def my_team(request):
 
 def players(request):
     """Выводит список всех игроков."""
-    pass
+    players = Player.objects.all()
+    context = {
+        'players': players,
+    }
+    return render(request, 'teams/players_list.html', context)
 
 
 def player_detail(request):

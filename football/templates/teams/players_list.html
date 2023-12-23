@@ -1,0 +1,48 @@
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid black;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+
+{% extends 'base.html' %}
+
+{% block title %}
+  Игроки
+{% endblock %}
+
+{% block content %}
+  <div class="container py-5">
+    <table>
+      <tr>
+        <th>Имя</th>
+        <th>Возраст</th>
+        <th>Сила</th>
+        <th>Цена</th>
+        <th>Позиция</th>
+        <th>Страна</th>
+        <th>Усталость</th>
+        <th>Команда</th>
+      </tr>
+      {% for player in players %}
+      <tr>
+        <td>{{ player.name }}</td>
+        <td>{{ player.age }}</td>
+        <td>{{ player.power }}</td>
+        <td>{{ player.cost }}</td>
+        <td>{{ player.position }}</td>
+        <td>{{ player.country }}</td>
+        <td>{{ player.fatigue }}</td>
+        <td>{{ player.team }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

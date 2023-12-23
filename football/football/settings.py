@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'teams.apps.TeamsConfig',
     'games.apps.GamesConfig',
     'core.apps.CoreConfig',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
