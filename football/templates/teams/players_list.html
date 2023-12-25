@@ -10,8 +10,11 @@
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
+  a {
+    text-decoration: none !important;
+  }
 </style>
-
+  
 {% extends 'base.html' %}
 
 {% block title %}
@@ -22,27 +25,66 @@
   <div class="container py-5">
     <table>
       <tr>
-        <th>Имя</th>
-        <th>Возраст</th>
-        <th>Сила</th>
-        <th>Цена</th>
-        <th>Позиция</th>
-        <th>Страна</th>
-        <th>Усталость</th>
-        <th>Команда</th>
+        {% if flag == False %}
+          <th><a href="{% url 'teams:players_list' %}?sort=name">Имя</a></th>          
+          <th><a href="{% url 'teams:players_list' %}?sort=age">Возраст</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=power">Сила</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=cost">Цена</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=position">Позиция</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=country">Страна</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=fatigue">Усталость</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=team">Команда</a></th>
+        {% else %}
+          <th><a href="{% url 'teams:players_list' %}?sort=-name">Имя</a></th>          
+          <th><a href="{% url 'teams:players_list' %}?sort=-age">Возраст</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=-power">Сила</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=-cost">Цена</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=-position">Позиция</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=-country">Страна</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=-fatigue">Усталость</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=-team">Команда</a></th>
+        {% endif %}
       </tr>
       {% for player in players %}
-      <tr>
-        <td>{{ player.name }}</td>
-        <td>{{ player.age }}</td>
-        <td>{{ player.power }}</td>
-        <td>{{ player.cost }}</td>
-        <td>{{ player.position }}</td>
-        <td>{{ player.country }}</td>
-        <td>{{ player.fatigue }}</td>
-        <td>{{ player.team }}</td>
-      </tr>
+        <tr>
+          <td>{{ player.name }}</td>
+          <td>{{ player.age }}</td>
+          <td>{{ player.power }}</td>
+          <td>{{ player.cost }}</td>
+          <td>{{ player.position }}</td>
+          <td>{{ player.country }}</td>
+          <td>{{ player.fatigue }}</td>
+          <td>{{ player.team }}</td>
+        </tr>
       {% endfor %}
     </table>
   </div>
-{% endblock %}
+
+  {% comment %} <button id="sortButton" class="btn btn-primary">Сортировать по возрасту</button>
+
+  <script>
+    document.getElementById('sortButton').addEventListener('click', function() {
+      var table, rows, switching, i, x, y, shouldSwitch;
+      table = document.querySelector('table');
+      switching = true;
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].querySelectorAll('td')[1]; // Возраст игрока
+          y = rows[i + 1].querySelectorAll('td')[1]; // Возраст следующего игрока
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch= true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
+    });
+  </script> {% endcomment %}
+
+{% endblock content %}

@@ -28,10 +28,23 @@ def my_team(request):
 
 
 def players(request):
-    """Выводит список всех игроков."""
-    players = Player.objects.all()
+    """Выводит список всех игроков.
+    Можно передавать доп параметр sort_param
+    для сортировки игроков.
+    """
+    sort_param = request.GET.get('sort')
+    if sort_param:
+        players = Player.objects.order_by(sort_param)
+        if sort_param[0] != '-':
+            flag = True
+        else:
+            flag = False
+    else:
+        players = Player.objects.all()
+        flag = False
     context = {
         'players': players,
+        'flag': flag,
     }
     return render(request, 'teams/players_list.html', context)
 
