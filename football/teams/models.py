@@ -21,6 +21,7 @@ class Team(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
+        related_name='team',
     )
     emblem = models.ImageField(
         verbose_name='Эмблема клуба',
@@ -34,8 +35,15 @@ class Team(models.Model):
     )
     capacity = models.PositiveIntegerField(
         verbose_name='Вместимость стадиона',
-        default=3500,
+        default=5000,
     )
+    money = models.PositiveIntegerField(
+        verbose_name='Деньги на счету команды',
+        default=25000000,
+    )
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Player(models.Model):
@@ -68,9 +76,6 @@ class Player(models.Model):
             MinValueValidator(settings.MIN_POWER_PLAYER, 'Слишком слабый'),
         )
     )
-    cost = models.PositiveIntegerField(
-        verbose_name='Цена футболиста',
-    )
     position = models.CharField(
         max_length=2,
         choices=POSITION_CHOICES,
@@ -91,3 +96,7 @@ class Player(models.Model):
         null=True,
         related_name='players',
     )
+
+    def calculate_cost(self):
+        """Считает цену игрока."""
+        return (40 - self.age) * self.power * 1000

@@ -18,16 +18,18 @@
           </a>
         </li> {% endcomment %}
         {% if request.user.is_authenticated %}
-        <li class="nav-item"> 
-          <a class="nav-link {% if view_name  == 'teams:teams_list' %}
-          active{% endif %}" href="{% url 'teams:teams_list' %}">
-            Команды
-          </a>
-        </li>
+        {% if request.user.team %}
         <li class="nav-item"> 
           <a class="nav-link {% if view_name  == 'teams:my_team' %}
           active{% endif %}" href="{% url 'teams:my_team' %}">
             Моя команда
+          </a>
+        </li>
+        {% endif %}
+        <li class="nav-item"> 
+          <a class="nav-link {% if view_name  == 'teams:teams_list' %}
+          active{% endif %}" href="{% url 'teams:teams_list' %}">
+            Команды
           </a>
         </li>
         <li class="nav-item"> 

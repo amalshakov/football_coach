@@ -97,6 +97,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+LOGIN_REDIRECT_URL = 'teams:index'
+
 EMAIL_MAX_LENGTH = 254
 MAX_AGE_PLAYER = 40
 MIN_AGE_PLAYER = 16

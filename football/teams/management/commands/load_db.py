@@ -31,9 +31,8 @@ class Command(BaseCommand):
                 name=name,
                 age=value[0],
                 power=value[1],
-                cost=value[2],
-                position=value[3],
-                country=value[4]
+                position=value[2],
+                country=value[3]
             )
         print('----- Players is LOAD -----')
 
@@ -43,8 +42,7 @@ class Command(BaseCommand):
             team, created = Team.objects.get_or_create(
                 name=name,
                 city=value[0],
-                stadium=value[1],
-                capacity=value[2]
+                stadium=value[1]
             )
             if created:
                 with open(f'static/data/emblem/{name}.png', 'rb') as file:

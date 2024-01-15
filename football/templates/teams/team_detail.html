@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}
+  {{ team }}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <aside class="col-12 col-md-3">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Название ФК: {{ team.name }}
+        </li>
+        <li class="list-group-item">
+          Город: {{ team.city }}
+        </li>
+        <li class="list-group-item">
+          Тренер: {{ team.coach }}
+        </li>
+        <li class="list-group-item">
+          Стадион: {{ team.stadium }}
+        </li>
+        <li class="list-group-item">
+          Вместимость: {{ team.capacity }}
+        </li>
+        {% if not team.coach and not request.user.team %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="team_id" value="{{ form.team_id.value }}">
+          <button type="submit" class="btn btn-primary">
+            Взять на управление эту команду
+          </button>
+        </form>
+        {% endif %}
+        <!-- если у поста есть группа -->
+        {% comment %} {% if post.group %}
+        <li class="list-group-item">
+          {{ post.group }}<!-- Название группы -->
+          <a href="{% url 'posts:group_list' post.group.slug %}">
+            все записи группы
+          </a>
+          {% endif %}
+        </li>
+        <li class="list-group-item">Автор: {{ post.author.get_full_name }}</li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Всего постов автора: <span>{{ post.author.posts_author.count }}</span>
+        </li>
+        <li class="list-group-item">
+          <a href="{% url 'posts:profile' post.author.username %}">
+            все посты пользователя
+          </a>
+        </li> {% endcomment %}
+      </ul>
+    </aside>
+    <article class="col-12 col-md-3">
+      {% thumbnail team.emblem "300x300" crop="center" quality=100 upscale=True as im %}
+        <img class="card-img my-2" src="{{ im.url }}">
+      {% endthumbnail %}
+      {% comment %} <p>
+        {{ post.text }}
+      </p>
+      {% if request.user == post.author %}
+      <form method="get" action="{% url 'posts:post_edit' post.id %}">
+        <button type="submit" class="btn btn-primary">
+          Редактировать пост
+        </button>
+      </form>
+      {% endif %} {% endcomment %}
+    </article>
+  </div>
+
+<!-- Форма добавления комментария -->
+{% comment %} {% load user_filters %}
+
+{% if user.is_authenticated %}
+  <div class="card my-4">
+    <h5 class="card-header">Добавить комментарий:</h5>
+    <div class="card-body">
+      <form method="post" action="{% url 'posts:add_comment' post.id %}">
+        {% csrf_token %}      
+        <div class="form-group mb-2">
+          {{ form.text|addclass:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+      </form>
+    </div>
+  </div>
+{% endif %}
+
+{% for comment in comments %}
+  <div class="media mb-4">
+    <div class="media-body">
+      <h5 class="mt-0">
+        <a href="{% url 'posts:profile' comment.author.username %}">
+          {{ comment.author.username }}
+        </a>
+      </h5>
+      <p>
+        {{ comment.text }}
+      </p>
+    </div>
+  </div>
+{% endfor %} {% endcomment %}
+{% endblock content %}

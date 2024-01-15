@@ -29,7 +29,7 @@
           <th><a href="{% url 'teams:players_list' %}?sort=name">Имя</a></th>          
           <th><a href="{% url 'teams:players_list' %}?sort=age">Возраст</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=power">Сила</a></th>
-          <th><a href="{% url 'teams:players_list' %}?sort=cost">Цена</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=calculate_cost">Цена</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=position">Позиция</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=country">Страна</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=fatigue">Усталость</a></th>
@@ -38,7 +38,7 @@
           <th><a href="{% url 'teams:players_list' %}?sort=-name">Имя</a></th>          
           <th><a href="{% url 'teams:players_list' %}?sort=-age">Возраст</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=-power">Сила</a></th>
-          <th><a href="{% url 'teams:players_list' %}?sort=-cost">Цена</a></th>
+          <th><a href="{% url 'teams:players_list' %}?sort=-calculate_cost">Цена</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=-position">Позиция</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=-country">Страна</a></th>
           <th><a href="{% url 'teams:players_list' %}?sort=-fatigue">Усталость</a></th>
@@ -50,11 +50,23 @@
           <td>{{ player.name }}</td>
           <td>{{ player.age }}</td>
           <td>{{ player.power }}</td>
-          <td>{{ player.cost }}</td>
+          <td>{{ player.calculate_cost }}</td>
           <td>{{ player.position }}</td>
           <td>{{ player.country }}</td>
           <td>{{ player.fatigue }}</td>
-          <td>{{ player.team }}</td>
+          {% if not player.team %}
+            <form method="post">
+            {% csrf_token %}
+              <td>
+                <input type="hidden" name="team_id" value="{{ form.team_id.value }}">
+                <button type="submit" class="btn btn-primary">
+                  Купить игрока
+                </button>
+              </td>
+            </form>
+          {% else %}
+            <td>{{ player.team }}</td>
+          {% endif %}
         </tr>
       {% endfor %}
     </table>
